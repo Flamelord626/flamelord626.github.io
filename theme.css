@@ -1,82 +1,72 @@
-  body{
-    margin:0px  0px; /* Since the top navbar is outside of the normal document flow, this ensures that it doesn't cover anything */
-    background-image: url(setup.png);
-    background-position: center center;
-    background-repeat: repeat;
-    font-family:MS Sans Serif;
-    word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
-    color:#32CD32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
-  }
-
-.sidenav {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #000;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-header {
-
-text-align: center;
-color:#32CD32;
-margin-top:8px;
-margin-bottom:8px;
-
-}
-#navlist {
-  position: relative;
+body{
+  margin:0;
+  background-image: url(setup.png);
+  font-family:MS Sans Serif,sans-serif;
+  word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
+  color:#32cd32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
 }
 
-#navlist li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  position: absolute;
-  top: 0;
-}
-p{
-	color:#32CD32
-}
-
-
-a {
-  color: #32CD32;
-}
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #f0f0f0;
-  display: block;
+.sidenav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:160px;
+  height:100%;
+  padding-top:20px;
+  overflow-x:hidden;
+  text-align:center;
+  background:#000;
+  z-index:1;
 }
 
-.sidenav a:hover {
-  color: #f0f0f0;
+header{
+  color:#32cd32;
+  margin-top:8px;
+  margin-bottom:8px;
 }
 
-.main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
+#navlist{
+  position:relative;
 }
-  .footer{
-    display:flex;
-    position:fixed;
-    bottom:0;
-    width:100vw;
-    height:32px;
-    background-image:linear-gradient(#000000,#fff);
-    backdrop-filter:blur(2px);
-    color:#394dcd; 
-    font-size:16px;
-    font-weight:bold;
-  }
 
-@media screen and (max-height: 450px) {
+#navlist li{
+  position:absolute;
+  top:0;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+p,a{color:#32cd32;}
+
+.sidenav a{
+  padding:6px 8px 6px 16px;
+  text-decoration:none;
+  font-size:25px;
+  color:#f0f0f0;
+  display:block;
+}
+
+.main{
+  margin-left:160px;
+  font-size:28px;
+  padding:0px 10px;
+}
+
+.footer{
+  display:flex;
+  position:fixed;
+  bottom:0;
+  width:100vw;
+  height:32px;
+  background-image:linear-gradient(#000000,#fff);
+  backdrop-filter:blur(2px);
+  color:#394dcd; 
+  font-size:16px;
+  font-weight:bold;
+}
+
+@media screen and (max-height: 450px){
   .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav a{font-size: 18px;}
 }
