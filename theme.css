@@ -4,7 +4,7 @@ body{
   font-family:MS Sans Serif,sans-serif;
   word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
   color:#32cd32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
-  animation:bgscroll 10s linear infinite;
+  animation:bgscroll 20s linear infinite alternate;
 }
 
 @keyframes bgscroll{
