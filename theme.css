@@ -4,6 +4,12 @@ body{
   font-family:MS Sans Serif,sans-serif;
   word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
   color:#32cd32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
+  animation:bgscroll 10s linear infinite;
+}
+
+@keyframes bgscroll{
+  from{background-position:0 0;}
+  to{background-position:100vw 100vh;}
 }
 
 .sidenav{
@@ -53,7 +59,10 @@ p,a{color:#32cd32;}
   padding:0px 10px;
 }
 
-@media screen and (max-height: 450px){
-  .sidenav {padding-top: 15px;}
+@media screen and (max-height:450px){
+  .sidenav{padding-top: 15px;}
   .sidenav a{font-size: 18px;}
+}
+@media (prefers-reduced-motion:reduce){
+  body{animation:none;} /* Prevent background scrolling if the user has reduced motion enabled */
 }
