@@ -1,2 +1,2 @@
-# my website
- well its my website
+# My Website
+My personal website. WebTV-compatible :P
