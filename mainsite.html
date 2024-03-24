@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html><head>
+  <title>Flamelord's Domain</title>
+  <style>
+  /* Theme by SKCro */
+  *{scrollbar-color:#9ff47a #5b317f80;}
+  ::selection{background-color:#87f65a90;}
+  html{
+    color-scheme:dark;
+    cursor:url(cursorold.svg) 5 0,default;
+  }
+  body{
+    margin:64px 0 36px 0; /* Since the top navbar is outside of the normal document flow, this ensures that it doesn't cover anything */
+    background-color:#210f39; /* Background color for the entire page */
+    font-family:Tahoma,MS Sans Serif,Helvetica Neue,Helvetica,sans-serif;
+    word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
+    color:#9ff47a; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
+  }
+
+  .top-nav{
+    display:flex;
+    position:fixed; /* Keep navigation bar in a fixed position relative to the browser window */
+    top:0; /* Keep it aligned to the top */
+    width:100vw; /* "vw" means "viewport width" - setting it to 100% of the viewport width, so it spans the entire window */
+    height:52px;
+    background-image:linear-gradient(#8a4ac2d0,#5b317fd0); /* Gradient background with slight transparency */
+    backdrop-filter:blur(2px); /* Blur anything behind the navbar */
+    box-shadow:0 2px 1px #0008; /* Navbar shadow */
+    color:#f0f0f0;
+    text-shadow:2px 2px 1px #0008; /* Text dropshadow with 2px offset for x and y, 1px blur radius, and semitransparent black */
+  }
+  .top-nav h2{ /* You can have specivity within CSS by specifying multiple targets - for example, this targets all h3 tags, but only within the top-nav */
+    margin:auto; /* I know it's a bit weird, but this actually centers the text. */
+  }
+
+  main{
+    margin:1%;
+  }
+  main,ul{
+    text-shadow:1.5px 1.5px 0.5px #0008;
+  }
+  
+  a{
+    color:#87f65a;
+  }
+  a:visited{
+    color:#6dc448;
+  }
+
+  footer{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    width:100vw;
+    height:32px;
+    background-image:linear-gradient(#5b317fd0,#220e3fd0);
+    backdrop-filter:blur(2px);
+    box-shadow:0 -2px 1px #0008;
+    color:#f0f0f0;
+    text-shadow:2px 2px 1px #0008;
+    font-size:16px;
+    font-weight:bold;
+  }
+  footer p{margin:auto;}
+  </style>
+  <meta charset=UTF-8> <!-- These meta tags handle character encoding and mobile viewport. -->
+  <meta name=viewport content="width=device-width,initial-scale=1.0">
+</head><body>
+<nav class=top-nav>
+  <h2>Flamelord's Domain</h2>
+</nav>
+<main>
+  <p>hi so welcome to the newer site well its newer ish but the point is that this is for modern stuff while the other one is not :/</p>
+  <p>now what am i going to put here? i dont have a fucking clue for now adlest its VERY unfinished and i am busy as of recently so yeah :P</p>
+  <ul>
+  </ul>
+</main>
+<footer><p>Theme by <a href=https://github.com/SKCro/ target=_new>SKCro</a> - Website content by Flamelord626</p></footer>
+<!--- finish this shit by next monday --->
+</body></html>
