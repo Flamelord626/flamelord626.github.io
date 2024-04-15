@@ -1,11 +1,20 @@
 <html><head><!-- Page designed and written by SKCro -->
   <title>Flamelord's Domain - WebTV Index</title>
   <bgsound src=BGM.mid loop=1>
+  <script>
+  function accessUrl(url){
+    //Method to use WebTV showAlert dialogs on non-WebTV pages
+    document.open('text/url');
+    document.write(url);
+    document.close();
+  }
+  var headerDialog='client:showAlert?message=You can do a lot of cool stuff with<br><blackface><marquee>WebTV-exclusive HTML :P</marquee></blackface>&buttonaction1=client:doNothing&buttonlabel1=Sweet!';
+  </script>
 </head><body background=wishingstar.png text=#f00000 link=#f00000 alink=#ff0000 vlink=#a00000 xspeed=1 yspeed=1 vspace=0 hspace=0 transition=slideup>
 <!-- Header -->
 <table class=header width=100% border=0 cellpadding=5 bgcolor=#a00000 gradcolor=#100000 transparency=25>
   <tr><td>
-    <table cellspacing=0 cellpadding=0 href="javascript:alert('You can do a lot of cool stuff with WebTV-exclusive HTML :P');" selected>
+    <table cellspacing=0 cellpadding=0 href="javascript:accessUrl(headerDialog);" selected>
       <tr><td><center><shadow>
         <font size=+3><b>Welcome to my Website!</b></font><br>
         <font size=+2><b>I hope you enjoy your stay</b></font><br>
@@ -32,7 +41,7 @@
     <hr>
   </shadow></td></tr>
   <tr><td><shadow><!-- Main content area -->
-    This site is a work-in-progress. Most of the time spent was making it look cool using a bunch of WebTV-exclusive features like transparent table backgrounds and gradients :P
+    <p>This site is a work-in-progress. Most of the time spent was making it look cool using a bunch of WebTV-exclusive features like transparent table backgrounds and gradients :P</p>
   </shadow></td></tr>
 </table>
 <!-- Footer -->
