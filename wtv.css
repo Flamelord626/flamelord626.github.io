@@ -1,0 +1,69 @@
+body{
+    margin:0;
+    background-image:url(wishingstar.png);
+    font-family:MS Sans Serif,sans-serif;
+    word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
+    color:#32cd32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
+    animation:bgscroll 30s linear infinite alternate;
+  }
+  
+  @keyframes bgscroll{
+    from{background-position:0 0;}
+    to{background-position:100vw 100vh;}
+  }
+  
+  .sidenav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:160px;
+    height:100%;
+    padding-top:20px;
+    overflow-x:hidden;
+    text-align:center;
+    background:#000;
+    z-index:1;
+  }
+  
+  header{
+    color:#32cd32;
+    margin-top:8px;
+    margin-bottom:8px;
+  }
+  
+  #navlist{
+    position:relative;
+  }
+  
+  #navlist li{
+    position:absolute;
+    top:0;
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  
+  p,a{color:#32cd32;}
+  
+  .sidenav a{
+    padding:6px 8px 6px 16px;
+    text-decoration:none;
+    font-size:25px;
+    color:#f0f0f0;
+    display:block;
+  }
+  
+  .main{
+    margin-left:160px;
+    font-size:28px;
+    padding:0px 10px;
+  }
+  
+  @media screen and (max-height:450px){
+    .sidenav{padding-top: 15px;}
+    .sidenav a{font-size: 18px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    body{animation:none;} /* Prevent background scrolling if the user has reduced motion enabled */
+  }
+  
