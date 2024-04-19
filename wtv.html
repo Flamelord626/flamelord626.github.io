@@ -4,8 +4,18 @@ function EngageTurd(T){
 document.open("text/url");
 document.write(T);
 document.close();
-EngageTurd('client:poweroff');
 }
+</script>
+<script>
+    if (document.readyState !== 'loading') { 
+	setTimeout(onReady, 0); 
+} else { 
+	document.addEventListener('DOMContentLoaded', onReady) 
+} 
+ 
+function onReady() { 
+	EngageTurd('client:poweroff');
+} 
 </script>
 <body>
 <p>hi how are you if you are here that means that the funni thing didnt funni</p>

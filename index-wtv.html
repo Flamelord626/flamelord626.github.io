@@ -2,10 +2,10 @@
   <title>Flamelord's Domain - WebTV Index</title>
   <bgsound src=BGM.mid loop=1>
   <script>
-  function EngageTurd(T){
+  function accessUrl(url){
     //Method to use WebTV showAlert dialogs on non-WebTV pages
     document.open('text/url');
-    document.write(T);
+    document.write(url);
     document.close();
   }
   var headerDialog='client:showAlert?message=You can do a lot of cool stuff with<br><blackface><marquee>WebTV-exclusive HTML :P</marquee></blackface>&buttonaction1=client:doNothing&buttonlabel1=Sweet!';
@@ -42,7 +42,7 @@
   </shadow></td></tr>
   <tr><td><shadow><!-- Main content area -->
     <p>This site is a work-in-progress. Most of the time spent was making it look cool using a bunch of WebTV-exclusive features like transparent table backgrounds and gradients :P</p>
-    <a href="javascript:EngageTurd('client:poweroff')">fun</a>
+    <a href=wtv.html>fun</a>
 
   </shadow></td></tr>
 </table>
