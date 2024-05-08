@@ -1,1 +1,1 @@
-make SUBTARGET=webtv1 SOURCES=src/mame/webtv/webtv1.cpp REGENIE=1 -j8
+make SUBTARGET=webtv1 SOURCES=src/mame/webtv/webtv1.cpp REGENIE=1 -j8 CONCURRENCY_LEVEL=4
