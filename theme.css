@@ -66,3 +66,19 @@ p,a{color:#32cd32;}
 @media (prefers-reduced-motion:reduce){
   body{animation:none;} /* Prevent background scrolling if the user has reduced motion enabled */
 }
+#controls {
+  width: 80px;
+  float: left;
+  color:blue;
+}
+
+#progress {
+  margin-left: 80px;
+  border: 1px solid blue;
+}
+
+#bar {
+  height: 20px;
+  background-color:#32cd32;
+  width: 0;
+}

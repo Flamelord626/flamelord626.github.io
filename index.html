@@ -1,9 +1,47 @@
 <!DOCTYPE HTML>
 <html><head>
-  <SCRIPT>
-    if(navigator.appName.indexOf("WebTV") != -1)
+    <script>
+       if(navigator.appName.indexOf("WebTV") != -1)
     window.location.replace("index-wtv.html");
-    </SCRIPT>
+window.onload = () => {
+  const audio = document.getElementById("my-audio");
+  const play = document.getElementById("play");
+  const pause = document.getElementById("pause");
+  const loading = document.getElementById("loading");
+  const bar = document.getElementById("bar");
+
+  function displayControls() {
+    loading.style.display = "none";
+    play.style.display = "block";
+  }
+
+  if (audio.paused) {
+    displayControls();
+  } else {
+    audio.addEventListener("canplay", () => {
+      displayControls();
+    });
+  }
+
+  play.addEventListener("click", () => {
+    audio.play();
+    play.style.display = "none";
+    pause.style.display = "block";
+  });
+
+  pause.addEventListener("click", () => {
+    audio.pause();
+    pause.style.display = "none";
+    play.style.display = "block";
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    bar.style.width = `${Math.floor(
+      (audio.currentTime / audio.duration) * 100,
+    )}%`;
+  });
+};
+    </script>
   <title>Flame's Domain</title>
   <meta charset=UTF-8>
   <meta name=viewport content="width=device-width,initial-scale=1">
@@ -43,7 +81,21 @@
   <header>
     <h1>Welcome to my Website!</h1>
     <h2>I hope you enjoy your stay</h2>
-    <b><marquee scrollamount=1 scrolldelay=10 behavior=alternate truespeed>This site is semi-compatible with WebTV!</marquee></b>
+    <audio id="my-audio" loop>
+      <source
+        src="miku.mp3"
+        type="audio/mpeg" />
+    </audio>
+    
+    <div id="controls">
+      <span id="loading">loading</span>
+      <button id="play" style="display:none">play</button>
+      <button id="pause" style="display:none">pause</button>
+    </div>
+    <div id="progress">
+      <div id="bar"></div>
+    </div>
+    <br>
   </header>
   <br>
   <audioscope width=96% height=50 leftoffset=-2 rightoffset=2 bgcolor=#000000 leftcolor=#0000FF rightcolor=#0000FF gain=2 border=2>
