@@ -1,69 +1,76 @@
-body{
-  margin:0;
-  background-image:url(setup.png);
-  font-family:MS Sans Serif,sans-serif;
-  word-wrap:break-word; /* Forces word wrapping to be enabled so nothing is cut off by accident */
-  color:#32cd32; /* Font color - I know it just says "color", CSS is a bit confusing with naming :P */
-  animation:bgscroll 35s linear infinite alternate;
+body {
+  margin: 0;
+  background: #000 url(wishingstar.gif) repeat; 
+  font-family: "Arial Rounded MT Bold", sans-serif;
+  color: #32cd32;
 }
 
-@keyframes bgscroll{
-  from{background-position:0 0;}
-  to{background-position:100vw 100vh;}
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  padding-top: 20px;
+  overflow-y: auto;
+  background: #000;
+  z-index: 1;
 }
 
-.sidenav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:160px;
-  height:100%;
-  padding-top:20px;
-  overflow-x:hidden;
-  text-align:center;
-  background:#000;
-  z-index:1;
+.sidenav img {
+  display: block;
+  margin: 0 auto;
 }
 
-header{
-  color:#32cd32;
-  margin-top:8px;
-  margin-bottom:8px;
+.sidenav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#navlist{
-  position:relative;
+.sidenav a {
+  display: block;
+  padding: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
 }
 
-#navlist li{
-  position:absolute;
-  top:0;
-  margin:0;
-  padding:0;
-  list-style:none;
+.sidenav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-p,a{color:#32cd32;}
-
-.sidenav a{
-  padding:6px 8px 6px 16px;
-  text-decoration:none;
-  font-size:25px;
-  color:#f0f0f0;
-  display:block;
+.main {
+  margin-left: 200px;
+  padding: 20px;
+  color: #ff6ac1;
+}
+.content {
+  color: #ff6ac1;
 }
 
-.main{
-  margin-left:160px;
-  font-size:28px;
-  padding:0px 10px;
+header h1, header h2 {
+  text-align: center;
 }
 
-@media screen and (max-height:450px){
-  .sidenav{padding-top: 15px;}
-  .sidenav a{font-size: 18px;}
+.content {
+  margin-top: 30px;
+  color: #ff6ac1;
 }
-@media (prefers-reduced-motion:reduce){
-  body{animation:none;} /* Prevent background scrolling if the user has reduced motion enabled */
+
+.content h1 {
+  font-size: 24px;
+  color: #ff6ac1; 
 }
-audio::-webkit-media-controls-enclosure{background:#32cd32;border-radius:0;}
+
+footer {
+  text-align: center;
+  color: #fff;
+}
+audio::-webkit-media-controls-enclosure {
+  background: #ff6ac1; 
+  border-radius: 10px;
+}
+
