@@ -1,14 +1,19 @@
+'use strict';
 /*
   WebTV HD compatibility script - See https://github.com/SKCro/WebTV-HD for details.
+
   Add this script to every page on your site to make it more compatible with WebTV HD.
-  /!\ Place the script at the very end of the body so everything can load in beforehand, otherwise you'll probably get errors.
-  This will send metadata to WTV-HD once verified - currently, just the page name and display tag.
-  Note that this script redefines alert() in a way that doesn't block script execution while the message is shown, so keep that in mind.
+  /!\ Place the script at the very end of the body so everything can load in beforehand, otherwise you'll probably get errors - the script relies on the page being fully loaded in beforehand. /!\
+  This script will send basic metadata (page title and address) to WTV-HD and enable exclusive functionality once verified.
+
+  Note that this script redefines alert() in a way that doesn't block script execution while the message is shown, so keep that in mind. See line 23.
+  It also remaps the "Del" key (not backspace) to open the options bar. See line 129.
+
   Yes, I know, the code is a mess. I'm sorry.
 */
 
 //Verify if the iframe is actually WebTV HD before sending metadata - yes, I know this security method is lame. I'll probably tighten it up later, but for now, it's good for testing.
-//I should probably limit the message source to the current instance of WebTV HD, which is at https://skcro.github.io/WebTV-HD.
+//I should probably limit the message source to the current instance of WebTV HD, which is at https://skcro.github.io/WebTV-HD, although I'll also be hosting the beta version, so it would break if I did that. I dunno.
 if(window.self!==window.top){//If the current window isn't the top one...
   parent.postMessage({type:'QueryForWebTVHD'},'*');//Post a message querying for WebTV HD...
   addEventListener('message',doInit);//Then once that message is recieved, start other functions
@@ -18,7 +23,7 @@ if(window.self!==window.top){//If the current window isn't the top one...
       removeEventListener('message',doInit);
     }
   }
-  function init(){
+  function init(){//Main functionality
     //Alert-related functionality
     alert=function(text){parent.postMessage({type:'jsalert',text:text},'*');}//Redefine alert to use WebTV-style alert dialogs - it still works the same, but doesn't block execution of scripts
     function showAlert(text){parent.postMessage({type:'alert',text:text},'*');}//Add support for service-style alert dialogs that use the WebTV logo instead
@@ -39,7 +44,6 @@ if(window.self!==window.top){//If the current window isn't the top one...
         console.log(error);
       }
     }
-    addEventListener('message',function(e){if(e.data&&e.data.type==='doAlertAction'){eval(tempAction);tempAction='';}});
     window.linkHandler=function(url){location.href=url;}//Useful for buttons or other clickable things that don't support href
 
     //Page name updater - monitors page title and reports any changes back to WTV-HD
@@ -70,39 +74,39 @@ if(window.self!==window.top){//If the current window isn't the top one...
     /* <bgsound> tag reimplementation
       HOW TO USE:
       Add a <meta name=bgsound> tag to the header of your page. Set the content to the absolute source URL of a music file, preferably an MP3 (since modern browsers don't do MIDI).
-      If the music shouldn't loop (it does by default), add ";"
+      If the music shouldn't loop (it does by default), add ";" to the end of the URL.
       For example: <meta name=bgsound content="https://example.com/bgsound.mp3">
     */
     const bgsound=document.querySelector('meta[name="bgsound"]');//Get the bgsound tag from the document, if any
     if(bgsound){//If the bgsound tag exists...
       const bgsoundSrc=bgsound.getAttribute('content');//Get its content...
       if(bgsoundSrc){parent.postMessage({type:'bgsound',source:bgsoundSrc},'*');}//...and post a message if a source is found
-    }else{parent.postMessage({type:'bgsound',source:'none'},'*');}//If there isn't any display tag, just post none so WTV-HD knows that the page doesn't have any bgsound
+    }else{parent.postMessage({type:'bgsound',source:'none'},'*');}//If there isn't any display tag, just post none so WTV-HD knows that the page doesn't have any bgmusic
 
     //Message handlers
-    addEventListener('message',function(e){//Listen for messages from WebTV HD
-      if(e.data){//Check if the message contains data
-        if(e.data.type==='find'&&e.data.term){//If the message is "find", and we have a search term...
+    function handleMessage(e){//Listen for messages from WebTV HD
+      switch(e.data.type){
+        case 'BGMusicQuery'://If the message is "BGMusicQuery", check if the display tag contains noMusic, and report the status back
+          const displayTag=document.querySelector('meta[name="display"]');
+          if(displayTag&&displayOptions.includes('noMusic')){parent.postMessage({type:bgmStatus,status:'disabled'},'*');}else{parent.postMessage({type:bgmStatus,status:'enabled'},'*');}
+        break;
+        case 'doAlertAction':eval(tempAction);tempAction='';break;//If the message is "doAlertAction", execute the code set earlier by an alert and clear the action
+        case 'find'://If the message is "find", and we have a search term...
           const term=find(e.data.term);//...look for the term on the page and highlight it if we found it
-          if(term){//If the term was found...
-            parent.postMessage({type:'matchFound'},'*');//Tell WTV-HD that we found the term (which closes the find panel)
-          }else{parent.postMessage({type:'noMatchFound'},'*');}//Or, if we didn't find it, tell WTV-HD just that (which brings up an error message)
-        }
-
-        else if(e.data.type==='print'){print();}//If the message is "print", prompt the user to print the page
-
-        //else if(e.data.type==='resetSelectionBox'){resetSelectionBox();}//If the message is "resetSelectionBox", do just that :P - currently commented out because the selectionbox isn't implemented yet
-
-        else if(e.data.type==='toggleSidebar'){//If the message is "toggleSidebar"...
+          if(term){parent.postMessage({type:'matchFound'},'*');}//If the term was found, tell WTV-HD that we found the term (which closes the find panel)
+          else{parent.postMessage({type:'noMatchFound'},'*');}//Or, if we didn't find it, tell WTV-HD just that (which brings up an error message)
+        break;
+        case 'print':print();break;//If the message is "print", prompt the user to print the page
+        case 'toggleSidebar'://If the message is "toggleSidebar"...
           const sidebar=document.querySelector('.sidebar');//Locate the sidebar or navigation bar
           const nav=document.querySelector('.side-nav');
-          function show(e){//Function to show sidebar
+          function show(e){//Show sidebar
             playSound('panelUp');
             e.classList.remove('hiding','hide');
             e.classList.add('show');
             resetSelectionBox();
           }
-          function hide(e){//Function to hide sidebar
+          function hide(e){//Hide sidebar
             playSound('panelDown');
             e.classList.remove('showing','show');
             e.classList.add('hide');
@@ -113,8 +117,158 @@ if(window.self!==window.top){//If the current window isn't the top one...
           }else if(nav){//If there's a side nav, show or hide it
             if(nav.classList.contains('show')||nav.classList.contains('showing')){hide(nav);}else{show(nav);}
           }else{playSound('bonkSound');}//If there's neither, just play the bonk sound effect
+        break;
+        case 'resetSelectionBox':resetSelectionBox();break;//If the message is "resetSelectionBox", do just that :P
+        default:console.warn('Received unknown message type:',e.data.type);//If it's a message we don't recognize, log it to the console
+      }
+    }
+    addEventListener('message',handleMessage);
+
+    //Loading indicator code - when the page hides via navigation, tell WTV-HD so it can show the loading indicator and hide the audioscope (if necessary)
+    addEventListener('pagehide',function(){
+      parent.postMessage({type:'loading'},'*');
+      parent.postMessage({type:'hideAudioscope'},'*');
+    });
+
+    //Make the Del key open the options bar - remove if you don't want this functionality
+    document.addEventListener('keydown',function(e){if(e.keyCode===46){e.preventDefault();parent.postMessage({type:'showOptionsBar'},'*');parent.focus();}});
+
+    //Scan for and attach the clickable attribute to all clickable elements - just anchors and stuff with an inline onClick handler for now
+    //To opt a tag out of being clickable, add the "noselect" class to it - it will still have the clickable class attached (and thus, will still play click sounds) but the selection box won't highlight it
+    document.querySelectorAll('a,[onclick]').forEach(function(e){e.classList.add('clickable');});
+
+    //Selection box
+    window.selectionBox=document.createElement('div');
+    selectionBox.id='selectionbox';
+    selectionBox.setAttribute('aria-hidden','true');
+    document.body.appendChild(selectionBox);
+    window.selectedElement=null;
+    window.highlight=function(e){
+      selectedElement=e;
+      try{selectedElement.focus({focusVisible:false});}catch(error){}
+      updateSelectionBox(2);
+    }
+    window.highlightNoScroll=function(e){
+      selectedElement=e;
+      try{selectedElement.focus({preventScroll:true,focusVisible:false});}catch(error){}
+      updateSelectionBox();
+    }
+    window.resetSelectionBox=function(){try{selectedElement.blur();}catch(error){}selectedElement=null;updateSelectionBox();}
+    function updateSelectionBox(v){
+      if(selectedElement){
+        const elementRect=selectedElement.getBoundingClientRect();
+        //Apply calculated dimensions and position to the selection box
+        selectionBox.style.top=elementRect.top+'px';
+        selectionBox.style.left=elementRect.left+'px';
+        selectionBox.style.width=elementRect.width+2+'px';
+        selectionBox.style.height=elementRect.height+2+'px';
+        selectionBox.style.display='block';
+        if(v){
+          if(v===1){
+            //Change the selectionbox to green
+            if(!selectedElement.classList.contains('input')){
+              selectionBox.classList.add('green');
+              setTimeout(function(){selectionBox.classList.remove('green');},100);
+            }
+          }else if(v===2){try{
+            //Check if the element is offscreen and scroll if it is
+            if(isElementOffScreen(selectedElement)){selectedElement.scrollIntoView({behavior:'smooth',block:'end',inline:'end'});}
+            selectedElement.focus({focusVisible:false});}catch(error){}
+          }
+        }
+      }else{selectionBox.style.display='none';}
+    }
+    if(selectionBox){setInterval(updateSelectionBox,1);}//Decrease this if performance becomes a problem
+    function checkIfInteractive(e){
+      return(
+        (e.classList.contains('clickable')||e.classList.contains('submit'))&&!e.classList.contains('noselect')
+       ||(e.tagName==='INPUT'&&!e.classList.contains('noselect'))
+      );
+    }
+    function getInteractiveElements(){
+      const allElements=document.querySelectorAll('*');
+      const interactiveElements=[];
+      for(let i=0;i<allElements.length;i++){if(checkIfInteractive(allElements[i])){interactiveElements.push(allElements[i]);}}
+      return interactiveElements;
+    }
+    //Find the nearest interactive element to a given position
+    function findNearestInteractiveElement(x,y){
+      const interactiveElements=getInteractiveElements();
+      const nearestElement=null;
+      const minDistance=Number.MAX_SAFE_INTEGER;
+      for(let i=0;i<interactiveElements.length;i++){
+        const element=interactiveElements[i];
+        const rect=element.getBoundingClientRect();
+        const centerX=rect.left+rect.width/2;
+        const centerY=rect.top+rect.height/2;
+        const distance=Math.sqrt((x-centerX)**2+(y-centerY)**2);
+        if(distance<minDistance){minDistance=distance;nearestElement=element;}
+      }return nearestElement;
+    }
+    addEventListener('resize',updateSelectionBox);
+    addEventListener('wheel',updateSelectionBox);
+    function isElementOffScreen(e){
+      const rect=e.getBoundingClientRect();
+      return(
+        rect.bottom<0||
+        rect.right<0||
+        rect.left>window.innerWidth||
+        rect.top>window.innerHeight
+      );
+    }
+    addEventListener('click',function(e){
+      const clickedElement=e.target;
+      if(checkIfInteractive(clickedElement)&&clickedElement!==selectedElement){
+        selectedElement=clickedElement;
+        updateSelectionBox(1);
+      }else{updateSelectionBox(2);}
+    });
+    addEventListener('keydown',function(e){
+      if(e.key==='Tab'){
+        e.preventDefault();
+        if(selectedElement&&selectedElement.tagName==='INPUT'){selectedElement.blur();}
+        const interactiveElements=getInteractiveElements();
+        const index=interactiveElements.indexOf(selectedElement);
+        if(e.shiftKey){selectedElement=interactiveElements[(index-1+interactiveElements.length)%interactiveElements.length];
+        }else{selectedElement=interactiveElements[(index+1)%interactiveElements.length];}
+        updateSelectionBox();
+      }else if(e.key==='Enter'){
+        if(selectedElement){
+          if(selectedElement.tagName==='INPUT'&&selectedElement.type==='text'||selectedElement.type==='url'||selectedElement.type==='email'){
+            updateSelectionBox();selectedElement.click();selectedElement.focus({preventScroll:true});
+          }else if(selectedElement.tagName==='g'){selectedElement.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));updateSelectionBox(1);}//Fix for clickable SVG groups
+          else{updateSelectionBox(1);selectedElement.click();}
         }
       }
     });
+  }
+
+  //Sound effects - also adds tabindex stuff to clickable things to make them focusable
+  window.playSound=function(sound){parent.postMessage({type:'sound',soundType:sound},'*');}
+  const inputs=document.querySelectorAll('.input');
+  const submitInputs=document.querySelectorAll('.submit');
+  const clickableButtons=document.querySelectorAll('.clickable');
+  const inputNoSound=document.querySelectorAll('.inputNoSound');
+  const audioTags=document.querySelectorAll('audio');
+  for(let audioTag of audioTags){
+    audioTag.addEventListener('play', function(){parent.postMessage({type:'showAudioscope'},'*');});
+    audioTag.addEventListener('pause',function(){parent.postMessage({type:'hideAudioscope'},'*');});
+    audioTag.addEventListener('ended',function(){parent.postMessage({type:'hideAudioscope'},'*');});
+  }
+  for(let i=0;i<clickableButtons.length;i++){
+    clickableButtons[i].addEventListener('click',function(){playSound('click');});
+    clickableButtons[i].setAttribute('tabindex',0);
+  }
+  for(let j=0;j<inputs.length;j++){
+    inputs[j].addEventListener('click',function(){playSound('input');});
+    inputs[j].setAttribute('tabindex',0);
+  }
+  for(let k=0;k<submitInputs.length;k++){
+    submitInputs[k].addEventListener('click',function(){playSound('submit');});
+    submitInputs[k].setAttribute('tabindex',0);
+  }
+  for(let l=0;l<inputNoSound.length;l++){
+    inputNoSound[l].addEventListener('click',function(){playSound('stop that sound!');});
+    inputNoSound[l].setAttribute('tabindex',0);
   }
 };
