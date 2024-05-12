@@ -3,7 +3,7 @@
 ::selection{background-color:#87f65a90;}
 html{
   color-scheme:dark;
-  cursor:url(cursorold.svg) 5 0,default;
+  cursor:url(cursor.svg) 5 0,default;
 }
 body{
   margin:64px 0 36px 0; /* Since the top navbar is outside of the normal document flow, this ensures that it doesn't cover anything */
