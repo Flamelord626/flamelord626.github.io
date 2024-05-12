@@ -110,9 +110,11 @@ audio::-webkit-media-controls-enclosure{
 
 @media(max-width:760px){
   .main{margin-left:0;}
-  .side-nav{
-    transform:translateX(-128px);
-  }
+  .side-nav{transform:translateX(-128px);}
+  .side-nav.show{animation:slideOut 1s ease-out forwards;}
+  .side-nav.hide{animation:slideIn 1s ease-out forwards;}
+  @keyframes slideIn{from{transform:translateX(0);}to{transform:translateX(-128px);}}
+  @keyframes slideOut{from{transform:translateX(-128px);}to{transform:translateX(0);}}
 }
 
 @media(prefers-reduced-motion:reduce){ /* Disable animation if the user has "Reduce motion" enabled */
