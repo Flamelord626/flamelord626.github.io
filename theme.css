@@ -1,7 +1,8 @@
+/* Theme by SKCro */
 body{
   margin:0;
   font-family:Helvetica Rounded,Arial Rounded,Helvetica,Arialsans-serif;
-  animation:bgscroll 5s linear infinite;
+  animation:bgscroll 10s linear infinite;
   background:#000 url(wishingstar.gif) repeat;
   color:#32cd32;
   text-shadow:2px 2px #000;
@@ -63,7 +64,7 @@ a::hover,a::active{color:#0088ff;}
 
 header{
   padding:12px 0;
-  background:linear-gradient(#a00000,#0000);
+  background:linear-gradient(#a00000e0,#0000);
 }
 header h1,header h2{
   margin:0;
@@ -81,8 +82,10 @@ header h1{
 }
 
 .audioscope-container{
+  margin:8px auto;
+  width:95%;
   border:8px ridge #a0000080;
-  margin-bottom:8px;
+  backdrop-filter:blur(4px);
 }
 .audioscope-separator{
   margin:1px 0;
@@ -92,7 +95,7 @@ header h1{
 footer{
   text-align:center;
   padding:6px 0;
-  background:linear-gradient(#0000,#a00000);
+  background:linear-gradient(#0000,#a00000e0);
   color:#fff;
 }
 
