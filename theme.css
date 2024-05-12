@@ -8,9 +8,9 @@ body{
   text-shadow:2px 2px #000;
 }
 
-a{color:#0080ff;}
-a:visited{color:#0064c5;}
-a::hover,a::active{color:#0088ff;}
+a{color:red;}
+a:visited{color:orange;}
+a::hover,a::active{color:orange;}
 
 @keyframes bgscroll{from{background-position:0 0;}to{background-position:0 718px;}}
 
@@ -59,12 +59,12 @@ a::hover,a::active{color:#0088ff;}
 .main{
   margin-left:128px;
   background:#10000040;
-  color:#ff6ac1;
+  color:red;
 }
 
 header{
   padding:12px 0;
-  background:linear-gradient(#a00000e0,#0000);
+  background:linear-gradient(hsla(0, 100%, 31%, 0.878),#0000);
 }
 header h1,header h2{
   margin:0;
