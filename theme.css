@@ -1,7 +1,7 @@
 /* Theme by SKCro */
 body{
   margin:0;
-  font-family:Helvetica Rounded,Arial Rounded,Helvetica,Arialsans-serif;
+  font-family:Helvetica Rounded,Arial Rounded,Helvetica,Arial,sans-serif;
   animation:bgscroll 10s linear infinite;
   background:#000 url(wishingstar.gif) repeat;
   color:#32cd32;
@@ -12,7 +12,7 @@ a{color:red;}
 a:visited{color:orange;}
 a::hover,a::active{color:orange;}
 
-@keyframes bgscroll{from{background-position:0 0;}to{background-position:0 718px;}}
+@keyframes bgscroll{from{background-position:0 0;}to{background-position:719px 718px;}}
 
 .side-nav{
   position:fixed;
@@ -57,14 +57,14 @@ a::hover,a::active{color:orange;}
 }
 
 .main{
-  margin-left:128px;
+  padding-left:128px;
   background:#10000040;
   color:red;
 }
 
 header{
   padding:12px 0;
-  background:linear-gradient(hsla(0, 100%, 31%, 0.878),#0000);
+  background:linear-gradient(#a00000e0,#0000);
 }
 header h1,header h2{
   margin:0;
@@ -103,7 +103,7 @@ footer{
 
 audio{
   width:100%;
-  background:#100000c0;
+  background:#160000b0;
   margin-top:-1px;
   margin-bottom:-3px;
 }
@@ -114,7 +114,7 @@ audio::-webkit-media-controls-enclosure{
 }
 
 @media(max-width:760px){
-  .main{margin-left:0;}
+  .main{padding-left:0;}
   .side-nav{transform:translateX(-128px);}
   .side-nav.show{animation:slideOut 0.5s ease-out forwards;}
   .side-nav.hide{animation:slideIn 0.5s ease-out forwards;}
