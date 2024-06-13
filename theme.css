@@ -96,8 +96,10 @@ footer{
   text-align:center;
   padding:6px 0;
   background:linear-gradient(#0000,#a00000e0);
-  color:orange;
-}
+  color:orange; 
+  position: fixed;
+    bottom: 0;
+    width: 100%;
 
 audio{
   width:100%;
