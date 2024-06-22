@@ -100,7 +100,8 @@ footer{
   position: fixed;
     bottom: 0;
     width: 100%;
-
+    footer p{margin:auto;}
+}
 audio{
   width:100%;
   background:#160000b0;
