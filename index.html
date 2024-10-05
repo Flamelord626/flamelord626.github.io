@@ -124,7 +124,20 @@ salute to hatsune miku you sick fuck-->
 		<p>Site content by Flamelord626, website maintained by <b><a href=https://github.com/SKCro target=_blank>SKCro</a></b> and <b><a href=https://github.com/avegee24 target=_blank>avegee24</a></b></p>
 	</footer>
 </main>
-<script src=https://skcro.destroytheos.net/js/wtv-hd.js></script>
+<script>
+    function loadScript(url, fallbackUrl) {
+        var script = document.createElement('script');
+        script.src = url;
+        script.onerror = function() {
+            var fallbackScript = document.createElement('script');
+            fallbackScript.src = fallbackUrl;
+            document.head.appendChild(fallbackScript);
+        };
+        document.head.appendChild(script);
+    }
+
+    loadScript('https://skcro.destroytheos.net/js/wtv-hd.js', 'wtv-hd.js');
+</script>
 <script>
 const scope1=document.getElementById('audioscope1');
 const scope2=document.getElementById('audioscope2');
